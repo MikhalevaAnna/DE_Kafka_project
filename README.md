@@ -27,12 +27,12 @@ insert into user_logins
 (username, event_type, event_time) 
 values
 ('alice',	'login',	'2025-11-12 13:53:51'),
-('bob',	'login',	'2025-11-12 13:53:52'),
-('bob',	'login',	'2025-11-12 13:53:53'),
-('carol',	'login',	'2025-11-12 13:53:54'),
+('bob',	'signup',	'2025-11-12 13:53:52'),
+('bob',	'purchase',	'2025-11-12 13:53:53'),
+('carol',	'signup',	'2025-11-12 13:53:54'),
 ('dave',	'login',	'2025-11-12 13:53:55'),
-('carol',	'login',	'2025-11-12 13:53:56'),
-('carol',	'login',	'2025-11-12 13:53:57'),
+('carol',	'purchase',	'2025-11-12 13:53:56'),
+('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
 3) Далее запускаем продюсер `producer_pg_to_kafka.py` 1 раз, он добавляет данные в Kafka и при этом флаг </br>
@@ -53,9 +53,9 @@ ORDER BY event_time
 insert into user_logins
 (username, event_type, event_time) 
 values
-('bob',	'login',	'2025-11-12 19:55:58'),
+('bob',	'signup',	'2025-11-12 19:55:58'),
 ('carol',	'login',	'2025-11-12 19:55:57'),
-('carol',	'login',	'2025-11-12 19:55:56')
+('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
 - чтобы убедиться, продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
 6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз.
