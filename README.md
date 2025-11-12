@@ -12,11 +12,11 @@
 1) Создана таблица `user_logins` в `PostgreSQL` со следующей структурой: 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
-    id SERIAL PRIMARY KEY,                    -- Создан идентификатор записи
+    id SERIAL PRIMARY KEY,                 -- Создан идентификатор записи
     username TEXT,
     event_type TEXT,
     event_time TIMESTAMP,
-    sent_to_kafka BOOLEAN DEFAULT FALSE      -- Создан стобец sent_to_kafka, который по умолчанию принимает значение **FALSE**
+    sent_to_kafka BOOLEAN DEFAULT FALSE    -- Создан стобец sent_to_kafka, который по умолчанию принимает значение **FALSE**
 )
 ```
 - Столбец `sent_to_kafka BOOLEAN` сигнализирует, были ли данные уже отправлены в `Kafka`.
