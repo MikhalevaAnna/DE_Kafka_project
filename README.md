@@ -67,10 +67,10 @@ values
 
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
 6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз. </br>
-  <img width="622" height="245" alt="image" src="https://github.com/user-attachments/assets/9f95ffb9-cce0-45b4-a0d6-febb78c21a30" />
+<img width="622" height="245" alt="image" src="https://github.com/user-attachments/assets/9f95ffb9-cce0-45b4-a0d6-febb78c21a30" />
 
 7) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>
-   <img width="480" height="250" alt="image" src="https://github.com/user-attachments/assets/777f17de-1213-4021-a46c-be00d598cf36" />
+<img width="480" height="250" alt="image" src="https://github.com/user-attachments/assets/777f17de-1213-4021-a46c-be00d598cf36" />
 
 8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Продюсер и консьмер работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
