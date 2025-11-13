@@ -41,7 +41,7 @@ values
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.
 <img width="619" height="180" alt="image" src="https://github.com/user-attachments/assets/038fe36e-0525-47a6-9a60-47ff23a28840" />
 
-5) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
+4) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
 он получает данные из `Kafka` и сохраняет их в `ClickHouse` в таблицу `user_logins` со следующей структурой:
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
