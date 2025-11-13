@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS user_logins (
 ) ENGINE = MergeTree()
 ORDER BY event_time
 ```
-<img width="478" height="185" alt="image" src="https://github.com/user-attachments/assets/9c0344d8-9458-456d-a551-d87f953c4199" />
+<img width="475" height="184" alt="image" src="https://github.com/user-attachments/assets/3a9c70c3-cbfd-4d11-a020-b89a0838ded4" />
 
 5) Далее мы добавляем в таблицу `user_logins` в `PostgreSQL` еще одну порцию данных:
 ```
