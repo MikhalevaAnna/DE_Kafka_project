@@ -35,9 +35,13 @@ values
 ('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
+<img width="618" height="181" alt="image" src="https://github.com/user-attachments/assets/ee557bfc-2c64-458d-82aa-074e7bc3f751" />
+
 3) Далее запускаем продюсер `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.
-4) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
+<img width="619" height="180" alt="image" src="https://github.com/user-attachments/assets/038fe36e-0525-47a6-9a60-47ff23a28840" />
+
+5) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
 он получает данные из `Kafka` и сохраняет их в `ClickHouse` в таблицу `user_logins` со следующей структурой:
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
@@ -47,7 +51,9 @@ CREATE TABLE IF NOT EXISTS user_logins (
     event_time DateTime
 ) ENGINE = MergeTree()
 ORDER BY event_time
-```  
+```
+<img width="478" height="185" alt="image" src="https://github.com/user-attachments/assets/9c0344d8-9458-456d-a551-d87f953c4199" />
+
 5) Далее мы добавляем в таблицу `user_logins` в `PostgreSQL` еще одну порцию данных:
 ```
 insert into user_logins
@@ -57,8 +63,14 @@ values
 ('carol',	'login',	'2025-11-12 19:55:57'),
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
+<img width="625" height="245" alt="image" src="https://github.com/user-attachments/assets/3f177b58-93e0-43ba-89a1-3885087c75ec" />
+
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
 6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз.
+  <img width="622" height="245" alt="image" src="https://github.com/user-attachments/assets/9f95ffb9-cce0-45b4-a0d6-febb78c21a30" />
+
 7) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.
-8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Продюсер и консьмер работают корректно. </br>
+8) <img width="480" height="250" alt="image" src="https://github.com/user-attachments/assets/777f17de-1213-4021-a46c-be00d598cf36" />
+
+9) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Продюсер и консьмер работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
