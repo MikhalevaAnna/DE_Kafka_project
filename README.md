@@ -106,7 +106,7 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 Process finished with exit code 0
 ```
 
-***7) Записи получены из `Kafka`:</br>***
+***7) Три записи получены из `Kafka`:</br>***
 ```
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
