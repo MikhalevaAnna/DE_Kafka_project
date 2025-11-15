@@ -10,10 +10,11 @@
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
 ## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/0fe1ddee-1d7c-4f02-ba02-f34759accd5e" /> Что необходимо для реализации:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. </br>
-Запускаем `docker-compose.yml`:</br>
+Запускаю `docker-compose.yml`:</br>
 ```
 docker-compose up -d
 ```
+Устанавливаю отсутствующие библиотеки. </br>
 В проекте используются следующие скрипты:
 -  `.env` -  файл с переменными окружения.
 - `producer_pg_to_kafka.py` - скрипт, который отправляет данные в **Kafka**.
