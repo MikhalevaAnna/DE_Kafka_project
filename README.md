@@ -40,9 +40,33 @@ values
 
 3) Далее запускаем продюсер `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>
+```
+D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
+Sent: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
+Sent: {'id': 622, 'user': 'bob', 'event': 'signup', 'timestamp': 1762955632.0}
+Sent: {'id': 623, 'user': 'bob', 'event': 'purchase', 'timestamp': 1762955633.0}
+Sent: {'id': 624, 'user': 'carol', 'event': 'signup', 'timestamp': 1762955634.0}
+Sent: {'id': 625, 'user': 'dave', 'event': 'login', 'timestamp': 1762955635.0}
+Sent: {'id': 626, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762955636.0}
+Sent: {'id': 627, 'user': 'carol', 'event': 'signup', 'timestamp': 1762955637.0}
+Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
+
+Process finished with exit code 0
+```
 <img width="619" height="180" alt="image" src="https://github.com/user-attachments/assets/038fe36e-0525-47a6-9a60-47ff23a28840" />
 
 4) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
+```
+D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
+Received: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
+Received: {'id': 622, 'user': 'bob', 'event': 'signup', 'timestamp': 1762955632.0}
+Received: {'id': 623, 'user': 'bob', 'event': 'purchase', 'timestamp': 1762955633.0}
+Received: {'id': 624, 'user': 'carol', 'event': 'signup', 'timestamp': 1762955634.0}
+Received: {'id': 625, 'user': 'dave', 'event': 'login', 'timestamp': 1762955635.0}
+Received: {'id': 626, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762955636.0}
+Received: {'id': 627, 'user': 'carol', 'event': 'signup', 'timestamp': 1762955637.0}
+Received: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
+```
 он получает данные из `Kafka` и сохраняет их в `ClickHouse` в таблицу `user_logins` со следующей структурой:
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
@@ -68,9 +92,23 @@ values
 
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
 6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз. </br>
+```
+D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
+Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
+Sent: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
+Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
+
+Process finished with exit code 0
+```
 <img width="622" height="245" alt="image" src="https://github.com/user-attachments/assets/9f95ffb9-cce0-45b4-a0d6-febb78c21a30" />
 
 7) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>
+```
+D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
+Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
+Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
+Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
+```
 <img width="480" height="250" alt="image" src="https://github.com/user-attachments/assets/777f17de-1213-4021-a46c-be00d598cf36" />
 
 8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Продюсер и консьмер работают корректно. </br>
