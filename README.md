@@ -1,6 +1,6 @@
 # <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/837618d8-a6e2-4a4a-9e70-1f8108c831c5" /> Работа с Kafka 
 
-## Описание:
+## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/98694e2d-f7f1-4318-8466-b224d1905dc6" /> Описание:
 В базе данных `PostgreSQL` хранится таблица `user_logins`. </br>
 В ней содержатся события пользователей, такие как логин, регистрация, покупка и т.д. </br>
 Каждый раз, когда необходимо перенести эти события из `PostgreSQL` в другую систему (например, `ClickHouse`), </br>
@@ -9,7 +9,7 @@
 Чтобы избежать дублирования, нужно использовать дополнительное логическое поле в таблице — `sent_to_kafka - BOOLEAN`, </br>
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
 
-## Реализация:
+## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/3c0a71e8-4251-43d4-afa8-c94e32829348" /> Реализация:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. <br>
 В проекте используются следующие скрипты:
 - `producer_pg_to_kafka.py` - скрипт, который отправляет данные в **Kafka**.
