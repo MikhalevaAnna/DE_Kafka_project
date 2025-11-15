@@ -1,15 +1,27 @@
 import psycopg2
 from kafka import KafkaProducer
 import json
-import time
+import time, os
+from dotenv import load_dotenv
+load_dotenv()
+
+KAFKA_HOST = os.getenv("KAFKA_HOST")
+
+POSTGRESQL_HOST = os.getenv("POSTGRESQL_HOST")
+POSTGRESQL_PORT = os.getenv("POSTGRESQL_PORT")
+POSTGRESQL_DATABASE = os.getenv("POSTGRESQL_DATABASE")
+POSTGRESQL_USER = os.getenv("POSTGRESQL_USER")
+POSTGRESQL_PASSWORD = os.getenv("POSTGRESQL_PASSWORD")
+
 
 producer = KafkaProducer(
-    bootstrap_servers='localhost:9092',
+    bootstrap_servers=KAFKA_HOST,
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
 conn = psycopg2.connect(
-    dbname="test_db", user="admin", password="admin", host="localhost", port=5432
+    dbname=POSTGRESQL_DATABASE, user=POSTGRESQL_USER, password=POSTGRESQL_PASSWORD,
+    host=POSTGRESQL_HOST, port=POSTGRESQL_PORT
 )
 cursor = conn.cursor()
 
