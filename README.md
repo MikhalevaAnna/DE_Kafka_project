@@ -16,7 +16,7 @@
 - `producer_pg_to_kafka.py` - скрипт, который отправляет данные в **Kafka**.
 - `consumer_to_clickhouse.py` - скрипт, который читает данные из **Kafka**.
 
-***1) Создаем таблицу `user_logins` в `PostgreSQL` со следующей структурой:*** 
+***1) Создаю таблицу `user_logins` в `PostgreSQL` со следующей структурой:*** 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
     id SERIAL PRIMARY KEY,                -- Создан идентификатор записи
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS user_logins (
 ```
 - Столбец `sent_to_kafka BOOLEAN` сигнализирует, были ли данные уже отправлены в `Kafka`.
   
-***2) Добавим тестовые данные в таблицу `user_logins`:***
+***2) Добавляю тестовые данные в таблицу `user_logins`:***
 ```
 insert into user_logins
 (username, event_type, event_time) 
@@ -42,7 +42,7 @@ values
 ('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
-***3) Далее запускаем `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
+***3) Запускаю `producer_pg_to_kafka.py` первый раз, скрипт добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
@@ -57,7 +57,7 @@ Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 
 Process finished with exit code 0
 ```
-***4) Следующим этапом запускаем  `consumer_to_clickhouse.py` и оставлем запущенным, он будет работать в режиме ожидания. </br>***
+***4) Следующим этапом запускаю  `consumer_to_clickhouse.py` и оставляю запущенным, скрипт будет работать в режиме ожидания. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS user_logins (
 ORDER BY event_time
 ```
 
-***5) Далее мы добавляем в таблицу `user_logins` в `PostgreSQL` еще одну порцию данных:***
+***5) Добавляю в таблицу `user_logins` в `PostgreSQL` 3 записи:***
 ```
 insert into user_logins
 (username, event_type, event_time) 
@@ -91,7 +91,7 @@ values
 ```
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен. </br>
 
-***6) Далее снова запускаем `producer_pg_to_kafka.py` 2 раз. </br>***
+***6) Снова запускаю `producer_pg_to_kafka.py` 2 раз. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -100,14 +100,15 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 
 Process finished with exit code 0
 ```
-***7) Следующим этапом смотрим, появились ли эти 3 записи в таблице в `ClickHouse`.</br>***
-В консоли видим, что записи получены:
+***7) Следующим этапом смотрю, появились ли эти 3 записи в таблице в `ClickHouse`.</br>***
+Вижу, что эти записи получены:
 ```
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-***8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Id записей могут отличаться от примера. </br>***
+***8) В таблицу `user_logins` в `ClickHouse` добавилось только три записи из предыдущего пункта. </br>***
+`Id` записей могут отличаться от примера. </br>
 `Producer_pg_to_kafka.py и `consumer_to_clickhouse.py` работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
