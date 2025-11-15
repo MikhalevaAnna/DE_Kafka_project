@@ -92,7 +92,7 @@ values
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
 
-***6) Запускаю `producer_pg_to_kafka.py` второй раз. </br>***
+***6) Запускаю `producer_pg_to_kafka.py` второй раз. Записи отправляются в `Kafka`. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -102,7 +102,7 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 Process finished with exit code 0
 ```
 
-***7) Записи из предыдущего пункта получены:</br>***
+***7) Записи из предыдущего пункта получены из `Kafka`:</br>***
 ```
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
