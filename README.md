@@ -1,4 +1,4 @@
-# Работа с Kafka 
+# <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/837618d8-a6e2-4a4a-9e70-1f8108c831c5" /> Работа с Kafka 
 
 ## Описание:
 В базе данных `PostgreSQL` хранится таблица `user_logins`. </br>
