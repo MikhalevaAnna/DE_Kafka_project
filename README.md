@@ -10,7 +10,7 @@
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
 
 ## Реализация:
-1) Создана таблица `user_logins` в `PostgreSQL` со следующей структурой: 
+1) Создаем таблицу `user_logins` в `PostgreSQL` со следующей структурой: 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
     id SERIAL PRIMARY KEY,                 -- Создан идентификатор записи
