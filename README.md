@@ -36,8 +36,6 @@ values
 ('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
-<img width="618" height="181" alt="image" src="https://github.com/user-attachments/assets/ee557bfc-2c64-458d-82aa-074e7bc3f751" />
-
 3) Далее запускаем продюсер `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>
 ```
@@ -53,8 +51,6 @@ Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 
 Process finished with exit code 0
 ```
-<img width="619" height="180" alt="image" src="https://github.com/user-attachments/assets/038fe36e-0525-47a6-9a60-47ff23a28840" />
-
 4) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
@@ -77,7 +73,6 @@ CREATE TABLE IF NOT EXISTS user_logins (
 ) ENGINE = MergeTree()
 ORDER BY event_time
 ```
-<img width="475" height="184" alt="image" src="https://github.com/user-attachments/assets/3a9c70c3-cbfd-4d11-a020-b89a0838ded4" />
 
 5) Далее мы добавляем в таблицу `user_logins` в `PostgreSQL` еще одну порцию данных:
 ```
@@ -88,8 +83,6 @@ values
 ('carol',	'login',	'2025-11-12 19:55:57'),
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
-<img width="625" height="245" alt="image" src="https://github.com/user-attachments/assets/3f177b58-93e0-43ba-89a1-3885087c75ec" />
-
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
 6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз. </br>
 ```
@@ -100,8 +93,6 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 
 Process finished with exit code 0
 ```
-<img width="622" height="245" alt="image" src="https://github.com/user-attachments/assets/9f95ffb9-cce0-45b4-a0d6-febb78c21a30" />
-
 7) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
@@ -109,7 +100,6 @@ Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
-<img width="480" height="250" alt="image" src="https://github.com/user-attachments/assets/777f17de-1213-4021-a46c-be00d598cf36" />
 
 8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Продюсер и консьмер работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
