@@ -16,6 +16,7 @@ POSTGRESQL_PASSWORD = os.getenv("POSTGRESQL_PASSWORD")
 
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_HOST,
+    enable_idempotence = True,
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 

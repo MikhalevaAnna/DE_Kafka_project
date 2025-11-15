@@ -15,9 +15,10 @@ try:
     consumer = KafkaConsumer(
         "user_events",
         bootstrap_servers=KAFKA_HOST,
+        group_id='group_user_events',
         auto_offset_reset='latest',
-        group_id = 'group_user_events',
         enable_auto_commit=True,
+        isolation_level='read_committed',
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
 
