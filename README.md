@@ -14,11 +14,11 @@
 1) Создаем таблицу `user_logins` в `PostgreSQL` со следующей структурой: 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
-    id SERIAL PRIMARY KEY,                 -- Создан идентификатор записи
-    username TEXT,                         -- Имя пользователя
-    event_type TEXT,                       -- Событие, совершенное пользователем
-    event_time TIMESTAMP,                  -- Время, когда было совершено событие
-    sent_to_kafka BOOLEAN DEFAULT FALSE    -- Создан стобец sent_to_kafka, который по умолчанию принимает значение **FALSE**
+    id SERIAL PRIMARY KEY,                -- Создан идентификатор записи
+    username TEXT,                        -- Имя пользователя
+    event_type TEXT,                      -- Событие, совершенное пользователем
+    event_time TIMESTAMP,                 -- Время, когда было совершено событие
+    sent_to_kafka BOOLEAN DEFAULT FALSE   -- Создан стобец sent_to_kafka, который по умолчанию принимает значение **FALSE**
 )
 ```
 - Столбец `sent_to_kafka BOOLEAN` сигнализирует, были ли данные уже отправлены в `Kafka`.
