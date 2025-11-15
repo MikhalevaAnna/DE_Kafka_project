@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS user_logins (
     sent_to_kafka BOOLEAN DEFAULT FALSE   -- Создан стобец sent_to_kafka, который по умолчанию принимает значение FALSE
 )
 ```
-- Столбец `sent_to_kafka BOOLEAN` сигнализирует, были ли данные уже отправлены в `Kafka`.
+- Столбец `sent_to_kafka BOOLEAN` информирует, были ли данные уже отправлены в `Kafka`.
   
 ***2) Добавляю тестовые данные в таблицу `user_logins`:***
 ```
@@ -48,7 +48,7 @@ values
 ```
 
 ***3) Запускаю `producer_pg_to_kafka.py` первый раз, скрипт отправляет 8 записей в `Kafka` и при этом флаг </br>
-`sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>***
+`sent_to_kafka` устанавливается для этих записей в значение **TRUE**.</br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
