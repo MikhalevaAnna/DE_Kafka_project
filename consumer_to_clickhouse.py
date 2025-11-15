@@ -1,5 +1,3 @@
-from tokenize import group
-
 from kafka import KafkaConsumer
 import json
 import clickhouse_connect
@@ -27,15 +25,11 @@ try:
     """)
 
     for message in consumer:
-        try:
-            data = message.value
-            print("Received:", data)
-            client.command(
-                f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
-                f"('{data['id']}', '{data['user']}', '{data['event']}', subtractHours(toDateTime({data['timestamp']}), 3))"
-            )
-        except Exception as e:
-            print(f"Ошибка получения данных: {e}")
-
+        data = message.value
+        print("Received:", data)
+        client.command(
+            f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
+            f"('{data['id']}', '{data['user']}', '{data['event']}', subtractHours(toDateTime({data['timestamp']}), 3))"
+        )
 except Exception as e:
     print(f"Возникла ошибка: {e}")
