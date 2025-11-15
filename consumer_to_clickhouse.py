@@ -27,12 +27,15 @@ try:
     """)
 
     for message in consumer:
-        data = message.value
-        print("Received:", data)
-        client.command(
-            f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
-            f"('{data['id']}', '{data['user']}', '{data['event']}', subtractHours(toDateTime({data['timestamp']}), 3))"
-        )
+        try:
+            data = message.value
+            print("Received:", data)
+            client.command(
+                f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
+                f"('{data['id']}', '{data['user']}', '{data['event']}', subtractHours(toDateTime({data['timestamp']}), 3))"
+            )
+        except Exception as e:
+            print(f"Ошибка получения данных: {e}")
 
 except Exception as e:
     print(f"Возникла ошибка: {e}")
