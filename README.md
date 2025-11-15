@@ -42,6 +42,7 @@ values
 ('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
+
 ***3) Запускаю `producer_pg_to_kafka.py` первый раз, скрипт добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>***
 ```
@@ -57,7 +58,8 @@ Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 
 Process finished with exit code 0
 ```
-***4) Следующим этапом запускаю  `consumer_to_clickhouse.py` и оставляю запущенным, скрипт будет работать в режиме ожидания. </br>***
+
+***4) Запускаю `consumer_to_clickhouse.py` и оставляю запущенным, скрипт будет работать в режиме ожидания. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
@@ -80,7 +82,7 @@ CREATE TABLE IF NOT EXISTS user_logins (
 ORDER BY event_time
 ```
 
-***5) Добавляю в таблицу `user_logins` в `PostgreSQL` 3 записи:***
+***5) Добавляю в таблицу `user_logins` в `PostgreSQL` дополнительно 3 записи, чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka`  выставлен корректно:</br>***
 ```
 insert into user_logins
 (username, event_type, event_time) 
@@ -89,9 +91,8 @@ values
 ('carol',	'login',	'2025-11-12 19:55:57'),
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
-- чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен. </br>
 
-***6) Снова запускаю `producer_pg_to_kafka.py` 2 раз. </br>***
+***6) Запускаю `producer_pg_to_kafka.py` второй раз. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -100,15 +101,15 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 
 Process finished with exit code 0
 ```
-***7) Следующим этапом смотрю, появились ли эти 3 записи в таблице в `ClickHouse`.</br>***
-Вижу, что эти записи получены:
+
+***7) Записи из предыдущего пункта получены:</br>***
 ```
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-***8) В таблицу `user_logins` в `ClickHouse` добавилось только три записи из предыдущего пункта. </br>***
+***8) Три записи из предыдущего пункта добавлены в таблицу `user_logins` в `ClickHouse`. Дубликатов не появилось.</br>***
 `Id` записей могут отличаться от примера. </br>
 `Producer_pg_to_kafka.py и `consumer_to_clickhouse.py` работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
