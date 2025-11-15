@@ -106,14 +106,14 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 Process finished with exit code 0
 ```
 
-***7) Записи из предыдущего пункта получены из `Kafka`:</br>***
+***7) Записи получены из `Kafka`:</br>***
 ```
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-***8) Три записи из предыдущего пункта добавлены в таблицу `user_logins` в `ClickHouse`. Дубликаты отсутствуют.</br>***
+***8) Три записи добавлены в таблицу `user_logins` в `ClickHouse`. Дубликаты отсутствуют.</br>***
 `Id` записей могут отличаться от примера. </br>
 Скрипты: `Producer_pg_to_kafka.py` и `consumer_to_clickhouse.py` - работают корректно. </br>
 В результате получилось устойчивое решение миграции данных с защитой от дубликатов.
