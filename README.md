@@ -1,6 +1,6 @@
 # <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/837618d8-a6e2-4a4a-9e70-1f8108c831c5" /> Работа с Kafka 
 
-## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/98694e2d-f7f1-4318-8466-b224d1905dc6" /> Описание:
+## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/98694e2d-f7f1-4318-8466-b224d1905dc6" /> Описание проекта:
 В базе данных `PostgreSQL` хранится таблица `user_logins`. </br>
 В ней содержатся события пользователей, такие как логин, регистрация, покупка и т.д. </br>
 Каждый раз, когда необходимо перенести эти события из `PostgreSQL` в другую систему (например, `ClickHouse`), </br>
@@ -8,8 +8,7 @@
 Однако, в реальных задачах возникает риск повторной отправки уже обработанных данных. </br>
 Чтобы избежать дублирования, нужно использовать дополнительное логическое поле в таблице — `sent_to_kafka - BOOLEAN`, </br>
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
-
-## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/3c0a71e8-4251-43d4-afa8-c94e32829348" /> Реализация:
+## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/0fe1ddee-1d7c-4f02-ba02-f34759accd5e" /> Что необходимо для реализации:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. </br>
 Запускаем `docker-compose.yml`:</br>
 ```
@@ -19,7 +18,7 @@ docker-compose up -d
 -  `.env` -  файл с переменными окружения.
 - `producer_pg_to_kafka.py` - скрипт, который отправляет данные в **Kafka**.
 - `consumer_to_clickhouse.py` - скрипт, который читает данные из **Kafka**.
-
+## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/3c0a71e8-4251-43d4-afa8-c94e32829348" /> Реализация:
 ***1) Создаю таблицу `user_logins` в `PostgreSQL` со следующей структурой:*** 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
@@ -113,7 +112,8 @@ Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-***8) В результате проделанной работы в таблице `user_logins` в `ClickHouse` находится 11 записей. Дубликаты отсутствуют.</br>***
+## <img width="20" height="25" alt="image" src="https://github.com/user-attachments/assets/506915a7-32ff-4c48-b2d8-57a86e59b354" /> Результат:
+В результате проделанной работы в таблице `user_logins` в `ClickHouse` находится 11 записей. Дубликаты отсутствуют.</br>
 `Id` записей могут отличаться от примера. </br>
 Скрипты: `Producer_pg_to_kafka.py` и `consumer_to_clickhouse.py` - работают корректно. </br>
 В результате получилось устойчивое решение миграции данных с защитой от дубликатов.
