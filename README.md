@@ -57,7 +57,7 @@ Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 
 Process finished with exit code 0
 ```
-***4) Следующим этапом запускаем запускаем  `consumer_to_clickhouse.py` первый раз. </br>***
+***4) Следующим этапом запускаем  `consumer_to_clickhouse.py` и оставлем запущенным, он будет работать в режиме ожидания. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
@@ -100,9 +100,9 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 
 Process finished with exit code 0
 ```
-***7) Следующим этапом запускаем запускаем `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>***
+***7) Следующим этапом смотрим, появились ли эти 3 записи в таблице в `ClickHouse`.</br>***
+В консоли видим, что записи получены:
 ```
-D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
 Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357.0}
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
