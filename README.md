@@ -36,7 +36,7 @@ values
 ('carol',	'signup',	'2025-11-12 13:53:57'),
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
-3) Далее запускаем продюсер `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
+3) Далее запускаем `producer_pg_to_kafka.py` 1 раз, он добавляет данные в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
@@ -51,7 +51,7 @@ Sent: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 
 Process finished with exit code 0
 ```
-4) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` первый раз, </br>
+4) Следующим этапом запускаем запускаем  `consumer_to_clickhouse.py` первый раз, </br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 621, 'user': 'alice', 'event': 'login', 'timestamp': 1762955631.0}
@@ -84,7 +84,7 @@ values
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
 - чтобы убедиться, что продюсер не отправляет повторно записи и флаг `sent_to_kafka` корректно выставлен.
-6) Далее снова запускаем продюсер `producer_pg_to_kafka.py` 2 раз. </br>
+6) Далее снова запускаем `producer_pg_to_kafka.py` 2 раз. </br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -93,7 +93,7 @@ Sent: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.
 
 Process finished with exit code 0
 ```
-7) Следующим этапом запускаем запускаем консьмер `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>
+7) Следующим этапом запускаем запускаем `consumer_to_clickhouse.py` второй раз, он получает данные из `Kafka` и сохраняет их в `ClickHouse`.</br>
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\consumer_to_clickhouse.py 
 Received: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -102,5 +102,5 @@ Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977
 ```
 
 8) В таблицу `user_logins` в `ClickHouse` добавилось только 3 записи. Id записей могут отличаться от примера. </br>
-Продюсер и консьмер работают корректно. </br>
+`Producer_pg_to_kafka.py и `consumer_to_clickhouse.py` работают корректно. </br>
 В результате реализации получилось устойчивое решение миграции данных с защитой от дубликатов.
