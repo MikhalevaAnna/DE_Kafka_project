@@ -10,6 +10,7 @@
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
 
 ## Реализация:
+Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`.
 1) Создаем таблицу `user_logins` в `PostgreSQL` со следующей структурой: 
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
