@@ -8,7 +8,7 @@
 Однако, в реальных задачах возникает риск повторной отправки уже обработанных данных. </br>
 Чтобы избежать дублирования, нужно использовать дополнительное логическое поле в таблице — `sent_to_kafka - BOOLEAN`, </br>
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
-## <img width="27" height="27" alt="image" src="https://github.com/user-attachments/assets/24ff5b7d-14bf-4503-bf99-877fb6528e9e" /> Что необходимо для реализации:
+## <img width="27" height="27" alt="image" src="https://github.com/user-attachments/assets/24ff5b7d-14bf-4503-bf99-877fb6528e9e" /> Что необходимо сделать для реализации:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. </br>
 Запускаю `docker-compose.yml`:</br>
 ```
