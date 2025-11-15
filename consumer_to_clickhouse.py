@@ -39,7 +39,10 @@ try:
             print("Received:", data)
             client.command(
                 f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
-                f"('{data['id']}', '{data['user']}', '{data['event']}', subtractHours(toDateTime({data['timestamp']}), 3))"
+                f"('{data['id']}'"
+                f", '{data['user']}'"
+                f", '{data['event']}'"
+                f", subtractHours(toDateTime({data['timestamp']}), 3))"
             )
         except Exception as e:
             print(f"Ошибка обработки сообщения: {e}")
