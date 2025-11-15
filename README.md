@@ -8,7 +8,7 @@
 Однако, в реальных задачах возникает риск повторной отправки уже обработанных данных. </br>
 Чтобы избежать дублирования, нужно использовать дополнительное логическое поле в таблице — `sent_to_kafka - BOOLEAN`, </br>
 которое будет сигнализировать, были ли данные уже отправлены в `Kafka`.</br>
-## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/0fe1ddee-1d7c-4f02-ba02-f34759accd5e" /> Что необходимо для реализации:
+## <img width="27" height="27" alt="image" src="https://github.com/user-attachments/assets/24ff5b7d-14bf-4503-bf99-877fb6528e9e" /> Что необходимо для реализации:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. </br>
 Запускаю `docker-compose.yml`:</br>
 ```
@@ -113,7 +113,7 @@ Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-## <img width="20" height="25" alt="image" src="https://github.com/user-attachments/assets/506915a7-32ff-4c48-b2d8-57a86e59b354" /> Результат:
+## <img width="23" height="25" alt="image" src="https://github.com/user-attachments/assets/506915a7-32ff-4c48-b2d8-57a86e59b354" /> Результат:
 В результате проделанной работы в таблице `user_logins` в `ClickHouse` находится 11 записей. Дубликаты отсутствуют.</br>
 `Id` записей могут отличаться от примера. </br>
 Скрипты: `Producer_pg_to_kafka.py` и `consumer_to_clickhouse.py` - работают корректно. </br>
