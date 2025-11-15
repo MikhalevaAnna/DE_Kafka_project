@@ -3,23 +3,20 @@ from kafka import KafkaProducer
 import json
 import time
 
-producer = ''
-cursor = ''
-conn = ''
+producer = KafkaProducer(
+    bootstrap_servers='localhost:9092',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
+conn = psycopg2.connect(
+    dbname="test_db", user="admin", password="admin", host="localhost", port=5432
+)
+cursor = conn.cursor()
 
 try:
-    producer = KafkaProducer(
-        bootstrap_servers='localhost:9092',
-        value_serializer=lambda v: json.dumps(v).encode('utf-8')
-    )
-
-    conn = psycopg2.connect(
-        dbname="test_db", user="admin", password="admin", host="localhost", port=5432
-    )
-    cursor = conn.cursor()
-
     cursor.execute(
-        "SELECT id, username, event_type, extract(epoch FROM event_time) as event_time, sent_to_kafka FROM user_logins WHERE sent_to_kafka = FALSE"
+        "SELECT id, username, event_type, extract(epoch FROM event_time) as event_time, sent_to_kafka "
+        "FROM user_logins WHERE sent_to_kafka = FALSE"
     )
     rows = cursor.fetchall()
 
