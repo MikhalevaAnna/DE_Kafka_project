@@ -47,7 +47,7 @@ values
 ('bob',	'login',	'2025-11-12 13:53:58')
 ```
 
-***3) Запускаю `producer_pg_to_kafka.py` первый раз, скрипт добавляет данные в `Kafka` и при этом флаг </br>
+***3) Запускаю `producer_pg_to_kafka.py` первый раз, скрипт отправляет 8 записей в `Kafka` и при этом флаг </br>
 `sent_to_kafka` устанавливает для этих записей в значение **TRUE**.</br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
@@ -75,7 +75,7 @@ Received: {'id': 626, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762955
 Received: {'id': 627, 'user': 'carol', 'event': 'signup', 'timestamp': 1762955637.0}
 Received: {'id': 628, 'user': 'bob', 'event': 'login', 'timestamp': 1762955638.0}
 ```
-Он получает данные из `Kafka` и сохраняет их в `ClickHouse` в таблицу `user_logins` со следующей структурой:
+Консьюмер получает данные из `Kafka` и сохраняет их в `ClickHouse` в таблицу `user_logins` со следующей структурой:
 ```
 CREATE TABLE IF NOT EXISTS user_logins (
     id UInt32,
@@ -96,7 +96,7 @@ values
 ('carol',	'purchase',	'2025-11-12 19:55:56')
 ```
 
-***6) Запускаю `producer_pg_to_kafka.py` второй раз. Записи отправляются в `Kafka`. </br>***
+***6) Запускаю `producer_pg_to_kafka.py` второй раз. Три записи отправляются в `Kafka`. </br>***
 ```
 D:\DE\DE_Kafka_project\.venv\Scripts\python.exe D:\DE\DE_Kafka_project\producer_pg_to_kafka.py 
 Sent: {'id': 629, 'user': 'bob', 'event': 'signup', 'timestamp': 1762977358.0}
@@ -113,7 +113,7 @@ Received: {'id': 630, 'user': 'carol', 'event': 'login', 'timestamp': 1762977357
 Received: {'id': 631, 'user': 'carol', 'event': 'purchase', 'timestamp': 1762977356.0}
 ```
 
-***8) Три записи добавлены в таблицу `user_logins` в `ClickHouse`. Дубликаты отсутствуют.</br>***
+***8) В результате проделанной работы в таблице `user_logins` в `ClickHouse` находится 11 записей. Дубликаты отсутствуют.</br>***
 `Id` записей могут отличаться от примера. </br>
 Скрипты: `Producer_pg_to_kafka.py` и `consumer_to_clickhouse.py` - работают корректно. </br>
 В результате получилось устойчивое решение миграции данных с защитой от дубликатов.
