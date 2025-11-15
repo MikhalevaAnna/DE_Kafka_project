@@ -12,6 +12,7 @@
 ## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/3c0a71e8-4251-43d4-afa8-c94e32829348" /> Реализация:
 Для работы нам понадобятся `PostgreSQL` -> `Kafka` -> `ClickHouse`. <br>
 В проекте используются следующие скрипты:
+-  `.env` -  файл с переменными окружения.
 - `producer_pg_to_kafka.py` - скрипт, который отправляет данные в **Kafka**.
 - `consumer_to_clickhouse.py` - скрипт, который читает данные из **Kafka**.
 
