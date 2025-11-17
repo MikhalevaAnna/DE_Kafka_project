@@ -2,6 +2,7 @@ from kafka import KafkaConsumer
 import json
 import clickhouse_connect, os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 load_dotenv()
 
 CLICKHOUSE_HOST = os.getenv("CLICKHOUSE_HOST")
@@ -32,17 +33,16 @@ try:
     ) ENGINE = MergeTree()
     ORDER BY event_time
     """)
-
     for message in consumer:
         try:
             data = message.value
             print("Received:", data)
-            client.command(
-                f"INSERT INTO user_logins (id, username, event_type, event_time) VALUES "
-                f"('{data['id']}'"
-                f", '{data['user']}'"
-                f", '{data['event']}'"
-                f", subtractHours(toDateTime({data['timestamp']}), 3))"
+            event_time = datetime.fromtimestamp(data['timestamp']) - timedelta(hours=3)
+            row = [[data['id'], data['user'], data['event'], event_time]]
+            client.insert(
+                'user_logins',
+                [[data['id'], data['user'], data['event'], event_time]],
+                column_names=['id', 'username', 'event_type', 'event_time']
             )
         except Exception as e:
             print(f"Ошибка обработки сообщения: {e}")
